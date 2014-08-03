@@ -26,7 +26,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/controler_linearlayout"
+            android:id="@+id/usercontroler_linearlayout"
             android:orientation="horizontal"
             android:layout_weight="1"
             android:background="@color/controller_linearlayout_background_color"></LinearLayout>
