@@ -13,10 +13,10 @@ public class DebugUtil {
 
         for(String s : args)
         {
-            msg += s + "-";
+            msg += s + ":";
         }
 
         Log.d("DebugLog", msg);
     }
-    
+
 }
