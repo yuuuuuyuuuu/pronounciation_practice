@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_pronounciation_practice">PronounciationPracticeActivity</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
 
 </resources>
