@@ -8,6 +8,7 @@ import com.dev.android.yuu.pronounciationpractice.R;
 
 public class PronounciationPracticeActivity extends Activity {
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
