@@ -33,8 +33,8 @@ public class SpeechRecognizerModel {
     {
         DebugUtil.DebugLog(this.getClass().toString(), "start()");
 
-        DebugUtil.AssertNull("SpeechRecognizer is null.", this.mSpeechRecognizer);
-        DebugUtil.AssertNull("RecognizerIntent is null", this.mRecognizerIntent);
+        DebugUtil.AssertNotNull("SpeechRecognizer is null.", this.mSpeechRecognizer);
+        DebugUtil.AssertNotNull("RecognizerIntent is null", this.mRecognizerIntent);
 
         this.mSpeechRecognizer.startListening(this.mRecognizerIntent);
 
@@ -74,6 +74,7 @@ public class SpeechRecognizerModel {
         this.mRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         this.mRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        this.mRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ja-JP");
 
         return true;
     }

@@ -12,7 +12,7 @@ import com.dev.android.yuu.pronounciationpractice.view.UserControllerView;
 public class PronounciationPracticeActivity extends Activity {
 
 
-    private UserControllerView mUserControllerView = null;
+    // private UserControllerView mUserControllerView = null;
     private SpeechRecognitionController mSpeechRecognitionController = null;
 
     @Override
@@ -21,7 +21,7 @@ public class PronounciationPracticeActivity extends Activity {
         setContentView(R.layout.activity_pronounciation_practice);
 
         this.mSpeechRecognitionController = new SpeechRecognitionController(this);
-        this.mUserControllerView = new UserControllerView(this, this.mSpeechRecognitionController);
+        // this.mUserControllerView = new UserControllerView(this, this.mSpeechRecognitionController);
     }
 
     @Override
