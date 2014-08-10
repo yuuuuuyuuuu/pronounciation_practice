@@ -5,16 +5,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.dev.android.yuu.pronounciationpractice.R;
+import com.dev.android.yuu.pronounciationpractice.controller.SpeechRecognitionController;
+import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
+import com.dev.android.yuu.pronounciationpractice.view.UserControllerView;
 
 public class PronounciationPracticeActivity extends Activity {
 
-    
+
+    private UserControllerView mUserControllerView = null;
+    private SpeechRecognitionController mSpeechRecognitionController = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pronounciation_practice);
-    }
 
+        this.mSpeechRecognitionController = new SpeechRecognitionController(this);
+        this.mUserControllerView = new UserControllerView(this, this.mSpeechRecognitionController);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,4 +42,6 @@ public class PronounciationPracticeActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /* Private Methods */
 }

@@ -3,4 +3,5 @@
     <color name="main_linearlayout_background_color">#AAAAFF</color>
     <color name="question_display_linearlayout_background_color">#CCCCCC</color>
     <color name="controller_linearlayout_background_color">#AAAAFF</color>
+    <color name="pronounciation_practice_background">#00BB00</color>
 </resources>

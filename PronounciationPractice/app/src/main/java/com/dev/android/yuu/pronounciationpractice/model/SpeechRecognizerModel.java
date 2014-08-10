@@ -20,15 +20,19 @@ public class SpeechRecognizerModel {
     private Intent mRecognizerIntent = null;
 
     /* Constructor */
-    public SpeechRecognizerModel(Context context)
+    public SpeechRecognizerModel(Context context, SpeechRecognitionListener speechRecognitionListener)
     {
         this.mContext = context;
+        this.mSpeechRecognitionListener = speechRecognitionListener;
+
         this.initialize();
     }
 
     /* Public Methods */
     public boolean start()
     {
+        DebugUtil.DebugLog(this.getClass().toString(), "start()");
+
         DebugUtil.AssertNull("SpeechRecognizer is null.", this.mSpeechRecognizer);
         DebugUtil.AssertNull("RecognizerIntent is null", this.mRecognizerIntent);
 
@@ -39,29 +43,37 @@ public class SpeechRecognizerModel {
 
     public boolean cancel()
     {
+        DebugUtil.DebugLog(this.getClass().toString(), "cancel()");
+
+        boolean result = false;
+
         return false;
     }
 
     public boolean stop()
     {
-        return false;
+        DebugUtil.DebugLog(this.getClass().toString(), "stop()");
+
+        boolean result = false;
+
+        this.mSpeechRecognizer.stopListening();
+
+        return result;
     }
 
     /* Private Methods */
     private boolean initialize()
     {
-        DebugUtil.AssertNotNull("SpeechRecognitionListener is not null.", this.mSpeechRecognitionListener);
-        DebugUtil.AssertNotNull("SpeechRecognizer is not null", this.mSpeechRecognizer);
-        DebugUtil.AssertNull("Context is null.", this.mContext);
+        //DebugUtil.AssertNotNull("SpeechRecognitionListener is not null.", this.mSpeechRecognitionListener);
+        //DebugUtil.AssertNotNull("SpeechRecognizer is not null", this.mSpeechRecognizer);
+        //DebugUtil.AssertNull("Context is null.", this.mContext);
 
-        this.mSpeechRecognitionListener = new SpeechRecognitionListener();
         this.mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this.mContext);
         this.mSpeechRecognizer.setRecognitionListener(this.mSpeechRecognitionListener);
 
         this.mRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         this.mRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        // this.mRecognizerIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "発音してください。");
 
         return true;
     }
