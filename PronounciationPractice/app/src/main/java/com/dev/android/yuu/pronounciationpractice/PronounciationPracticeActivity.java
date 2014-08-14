@@ -51,6 +51,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private TextView mTextViewVolume = null;
     private int VolumeTextViewId = R.id.textview_volume_level;
 
+    private TextView mTextViewLevel = null;
+    private int LevelTextViewId = R.id.textview_level;
+
     private String mNextQuestion = "";
 
     // Animation
@@ -203,6 +206,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.mTextViewResult = (TextView)findViewById(this.ResultTextViewId);
         this.mTextViewScore = (TextView)findViewById(this.ScoreTextViewId);
         this.mTextViewVolume = (TextView)findViewById(this.VolumeTextViewId);
+        this.mTextViewLevel = (TextView)findViewById(this.LevelTextViewId);
+
+        this.mTextViewLevel.setText("Level " + this.mQuestionLevel);
     }
 
     private void initializeAnimation()

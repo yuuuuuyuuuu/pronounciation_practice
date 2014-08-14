@@ -1,12 +1,15 @@
 package com.dev.android.yuu.pronounciationpractice;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.dev.android.yuu.pronounciationpractice.R;
 
@@ -14,18 +17,12 @@ import java.util.ArrayList;
 
 public class HomeActivity extends Activity implements View.OnClickListener {
 
-    private Button mButtonLevel1 = null;
-    private int ButtonLevel1Id = R.id.button_level1;
-
-    private Button mButtonLevel2 = null;
-    private int ButtonLevel2Id = R.id.button_level2;
-
-    private Button mButtonLevel3 = null;
-    private int ButtonLevel3Id = R.id.button_level3;
-
     // Level Buttons
     private static int LEVEL_BUTTON_NUM = 10;
     private ArrayList<Button> mLevelButtons = null;
+
+    private LinearLayout mLinearLayoutLevelButtons = null;
+    private int LinearLayoutLevelButtonId = R.id.linearlayout_level_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +31,6 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_home);
 
         this.createLevelButtons();
-        this.setUiEventHandlers();
     }
 
 
@@ -62,27 +58,36 @@ public class HomeActivity extends Activity implements View.OnClickListener {
 
         int viewId = view.getId();
 
-        if(this.ButtonLevel1Id == viewId)
+        if(view instanceof Button)
         {
-            this.startQuestionScreen(1);
+            int level = (Integer)view.getTag();
+
+            if(1 <= level && level <= this.LEVEL_BUTTON_NUM)
+            {
+                this.startQuestionScreen(level);
+            }
         }
     }
 
     /* Private Methods */
-    private void setUiEventHandlers()
-    {
-        this.mButtonLevel1 = (Button)findViewById(this.ButtonLevel1Id);
-        this.mButtonLevel2 = (Button)findViewById(this.ButtonLevel2Id);
-        this.mButtonLevel3 = (Button)findViewById(this.ButtonLevel3Id);
-
-        this.mButtonLevel1.setOnClickListener(this);
-        this.mButtonLevel2.setOnClickListener(this);
-        this.mButtonLevel3.setOnClickListener(this);
-    }
-
     private void createLevelButtons()
     {
+        this.mLinearLayoutLevelButtons = (LinearLayout)findViewById(this.LinearLayoutLevelButtonId);
+        this.mLevelButtons = new ArrayList<Button>();
 
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        for(int i = 0; i < this.LEVEL_BUTTON_NUM; i++)
+        {
+            Button button = new Button(this);
+            button.setLayoutParams(lp);
+            button.setText("Level " + String.valueOf(i));
+            button.setTag(i);
+            button.setOnClickListener(this);
+
+            this.mLevelButtons.add(button);
+            this.mLinearLayoutLevelButtons.addView(button);
+        }
     }
     private void startQuestionScreen(int level)
     {
