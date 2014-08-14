@@ -1,6 +1,7 @@
 package com.dev.android.yuu.pronounciationpractice;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,8 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
     private SpeechRecognitionController mSpeechRecognitionController = null;
     private QuestionController mQuestionController = null;
+
+    private int mQuestionLevel = 0;
 
     // UI
     private Button mButtonListen = null;
@@ -49,12 +52,13 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pronounciation_practice);
 
+        Intent i = getIntent();
+        this.mQuestionLevel = i.getIntExtra("question_level", 1);
+
         this.setUiEventHandlers();
 
         this.mSpeechRecognitionController = new SpeechRecognitionController(this, this);
         this.mQuestionController = new QuestionController(this, this);
-
-
     }
 
     @Override
@@ -127,10 +131,22 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     }
 
     @Override
+    public void onQuestionInitialized(String firstQuestion) {
+        DebugUtil.DebugLog(this.getClass().toString(), "onQuestionInitialized");
+        this.setQuestion(firstQuestion);
+
+    }
+
+    @Override
     public void onQuestionUpdated(String newQuestion) {
+        DebugUtil.DebugLog(this.getClass().toString(), "onQuestionUpdated");
+        this.setQuestion(newQuestion);
+    }
 
-        this.mTextViewCurrentQuestion.setText(newQuestion);
+    @Override
+    public void onQuestionEnded() {
 
+        this.processFinalize();
     }
 
     /* Private Methods */
@@ -163,5 +179,25 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     {
         DebugUtil.DebugLog(this.getClass().toString(), "startReferenceSpeaking");
     }
+
+    private void setQuestion(String questionText)
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "setQuestion");
+        this.mTextViewCurrentQuestion.setText(questionText);
+    }
+
+    private void processFinalize()
+    {
+        this.mSpeechRecognitionController.destroyRecognizer();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        this.finish();
+    }
+
 
 }

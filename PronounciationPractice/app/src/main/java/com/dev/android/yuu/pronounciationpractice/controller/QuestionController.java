@@ -15,13 +15,15 @@ public class QuestionController {
 
     private QuestionModel mQuestionModel = null;
 
+    private int mUserTrialNum = 0;
+
     public QuestionController(Context context, QuestionModelListener listener)
     {
         this.mContext = context;
         this.mListener = listener;
 
         this.mQuestionModel = new QuestionModel(this);
-        this.mListener.onQuestionUpdated(this.mQuestionModel.Current());
+        this.mListener.onQuestionInitialized(this.mQuestionModel.Current());
     }
 
     /* Public Methods */
@@ -37,7 +39,24 @@ public class QuestionController {
             result = true;
         }
 
+        this.mUserTrialNum++;
+
         return result;
+    }
+
+    public int getQuestionSize()
+    {
+        return this.mQuestionModel.getSize();
+    }
+
+    public void resetUserTrial()
+    {
+        this.mUserTrialNum = 0;
+    }
+
+    public void onQuestionEnded()
+    {
+        this.mListener.onQuestionEnded();
     }
 
     /* Private Methods */

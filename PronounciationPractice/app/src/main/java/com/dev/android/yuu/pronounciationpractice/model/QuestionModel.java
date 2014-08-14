@@ -28,9 +28,10 @@ public class QuestionModel {
     {
         this.mCurrentQuestionIndex++;
 
-        if(this.mQuestions.size() - 1 == this.mCurrentQuestionIndex)
+        if(this.mQuestions.size() == this.mCurrentQuestionIndex)
         {
             this.mCurrentQuestionIndex = this.mQuestions.size() - 1;
+            this.mQuestionController.onQuestionEnded();
         }
 
         return this.mQuestions.get(this.mCurrentQuestionIndex);
@@ -63,6 +64,10 @@ public class QuestionModel {
         this.mCurrentQuestionLevel = level;
     }
 
+    public int getSize()
+    {
+        return this.mQuestions.size();
+    }
 
     /* Private Methods */
     private void initialize()

@@ -63,6 +63,11 @@ public class SpeechRecognizerModel {
         return result;
     }
 
+    public void destroy()
+    {
+        this.mSpeechRecognizer.destroy();
+    }
+
     /* Private Methods */
     private boolean initialize()
     {

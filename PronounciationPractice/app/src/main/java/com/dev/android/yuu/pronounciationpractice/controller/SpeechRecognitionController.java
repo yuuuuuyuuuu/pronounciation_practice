@@ -64,6 +64,11 @@ public class SpeechRecognitionController {
         return result;
     }
 
+    public void destroyRecognizer()
+    {
+        this.mSpeechRecognizerModel.destroy();
+    }
+
     public void onSpeechResult(ArrayList<String> resultStrings, float[] scores)
     {
         DebugUtil.DebugLog(this.getClass().toString(), "onSpeechResult");
