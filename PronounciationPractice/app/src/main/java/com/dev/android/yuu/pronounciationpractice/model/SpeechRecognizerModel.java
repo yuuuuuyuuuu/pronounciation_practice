@@ -1,5 +1,7 @@
 package com.dev.android.yuu.pronounciationpractice.model;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
@@ -64,17 +66,14 @@ public class SpeechRecognizerModel {
     /* Private Methods */
     private boolean initialize()
     {
-        //DebugUtil.AssertNotNull("SpeechRecognitionListener is not null.", this.mSpeechRecognitionListener);
-        //DebugUtil.AssertNotNull("SpeechRecognizer is not null", this.mSpeechRecognizer);
-        //DebugUtil.AssertNull("Context is null.", this.mContext);
-
         this.mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this.mContext);
         this.mSpeechRecognizer.setRecognitionListener(this.mSpeechRecognitionListener);
 
         this.mRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         this.mRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        this.mRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ja-JP");
+        this.mRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+        this.mRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en-US");
 
         return true;
     }

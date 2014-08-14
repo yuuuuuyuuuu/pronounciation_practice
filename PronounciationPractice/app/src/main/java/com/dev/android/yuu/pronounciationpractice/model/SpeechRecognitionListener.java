@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
 
+import com.dev.android.yuu.pronounciationpractice.controller.SpeechRecognitionController;
 import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
 
 import java.util.ArrayList;
@@ -13,9 +14,19 @@ import java.util.ArrayList;
  */
 public class SpeechRecognitionListener implements RecognitionListener{
 
+    private SpeechRecognitionController mSpeechRecognitionController = null;
+
+    public SpeechRecognitionListener(SpeechRecognitionController speechRecognitionController)
+    {
+        super();
+
+        this.mSpeechRecognitionController = speechRecognitionController;
+    }
+
     @Override
     public void onReadyForSpeech(Bundle bundle) {
         DebugUtil.DebugLog(this.getClass().toString(), "onReadyForSpeech");
+        this.mSpeechRecognitionController.onReadyForSpeech();
     }
 
     @Override
@@ -26,6 +37,7 @@ public class SpeechRecognitionListener implements RecognitionListener{
     @Override
     public void onRmsChanged(float v) {
         //DebugUtil.DebugLog(this.getClass().toString(), "onRmsChanged");
+        this.mSpeechRecognitionController.onRmsChanged(v);
     }
 
     @Override
@@ -36,6 +48,7 @@ public class SpeechRecognitionListener implements RecognitionListener{
     @Override
     public void onEndOfSpeech() {
         DebugUtil.DebugLog(this.getClass().toString(), "onEndOfSpeech");
+        this.mSpeechRecognitionController.onEndOfSpeech();
     }
 
     @Override
@@ -56,9 +69,9 @@ public class SpeechRecognitionListener implements RecognitionListener{
             resultStr += s + ",";
         }
 
-        DebugUtil.DebugLog(this.getClass().toString(), "onResults", "resutlStr", resultStr);
+        DebugUtil.DebugLog(this.getClass().toString(), "onResults", "results", results.toString());
 
-
+        this.mSpeechRecognitionController.onSpeechResult(results, scores);
     }
 
     @Override

@@ -4,18 +4,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Debug;
 
+import com.dev.android.yuu.pronounciationpractice.custoninterface.SpeechRecognitionInterface;
 import com.dev.android.yuu.pronounciationpractice.handler.UserControllerViewHandler;
 import com.dev.android.yuu.pronounciationpractice.model.SpeechRecognitionListener;
 import com.dev.android.yuu.pronounciationpractice.model.SpeechRecognizerModel;
 import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
 import com.dev.android.yuu.pronounciationpractice.view.UserControllerView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Chieko on 8/10/14.
  */
 public class SpeechRecognitionController {
 
-    private Activity mParentActivity = null;
+    private SpeechRecognitionInterface mSpeechRecognitionInterface = null;
+
+    private Context mContext = null;
 
     // Model
     private SpeechRecognizerModel mSpeechRecognizerModel= null;
@@ -24,11 +29,12 @@ public class SpeechRecognitionController {
     // View
     private UserControllerViewHandler mUserControllerViewHandler = null;
 
-    public SpeechRecognitionController(Activity parentActivity)
+    public SpeechRecognitionController(Context context, SpeechRecognitionInterface speechRecognitionInterface)
     {
         DebugUtil.DebugLog(this.getClass().toString(), "Constructor");
 
-        this.mParentActivity = parentActivity;
+        this.mContext = context;
+        this.mSpeechRecognitionInterface = speechRecognitionInterface;
 
         this.initialize();
     }
@@ -58,15 +64,35 @@ public class SpeechRecognitionController {
         return result;
     }
 
+    public void onSpeechResult(ArrayList<String> resultStrings, float[] scores)
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "onSpeechResult");
+
+        this.mSpeechRecognitionInterface.onSpeechResult(resultStrings, scores);
+    }
+
+    public void onRmsChanged(float volume)
+    {
+        this.mSpeechRecognitionInterface.onRmsChanged(volume);
+    }
+
+    public void onReadyForSpeech()
+    {
+        this.mSpeechRecognitionInterface.onReadyForSpeech();
+    }
+
+    public void onEndOfSpeech()
+    {
+        this.mSpeechRecognitionInterface.onEndOfSpeech();
+    }
+
     /* Private Methods */
     private void initialize()
     {
         // model
-        this.mSpeechRecognitionListener = new SpeechRecognitionListener();
-        this.mSpeechRecognizerModel = new SpeechRecognizerModel((Context)this.mParentActivity, this.mSpeechRecognitionListener);
+        this.mSpeechRecognitionListener = new SpeechRecognitionListener(this);
+        this.mSpeechRecognizerModel = new SpeechRecognizerModel(this.mContext, this.mSpeechRecognitionListener);
 
-        // handler
-        this.mUserControllerViewHandler = new UserControllerViewHandler(this.mParentActivity, this);
     }
 
 }
