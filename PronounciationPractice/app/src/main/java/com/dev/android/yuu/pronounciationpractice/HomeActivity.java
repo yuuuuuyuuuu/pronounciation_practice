@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import com.dev.android.yuu.pronounciationpractice.R;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends Activity implements View.OnClickListener {
 
     private Button mButtonLevel1 = null;
@@ -21,6 +23,9 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     private Button mButtonLevel3 = null;
     private int ButtonLevel3Id = R.id.button_level3;
 
+    // Level Buttons
+    private static int LEVEL_BUTTON_NUM = 10;
+    private ArrayList<Button> mLevelButtons = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        this.createLevelButtons();
         this.setUiEventHandlers();
     }
 
@@ -74,6 +80,10 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         this.mButtonLevel3.setOnClickListener(this);
     }
 
+    private void createLevelButtons()
+    {
+
+    }
     private void startQuestionScreen(int level)
     {
         Intent i = new Intent(HomeActivity.this, PronounciationPracticeActivity.class);
