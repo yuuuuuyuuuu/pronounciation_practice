@@ -2,10 +2,13 @@ package com.dev.android.yuu.pronounciationpractice;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,13 +18,14 @@ import com.dev.android.yuu.pronounciationpractice.controller.SpeechRecognitionCo
 import com.dev.android.yuu.pronounciationpractice.custoninterface.QuestionModelListener;
 import com.dev.android.yuu.pronounciationpractice.custoninterface.SpeechRecognitionInterface;
 import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
+import com.dev.android.yuu.pronounciationpractice.util.ScreenUtil;
 import com.dev.android.yuu.pronounciationpractice.view.UserControllerView;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class PronounciationPracticeActivity extends Activity implements View.OnClickListener, SpeechRecognitionInterface, QuestionModelListener{
+public class PronounciationPracticeActivity extends Activity implements View.OnClickListener, SpeechRecognitionInterface, QuestionModelListener, Animation.AnimationListener {
 
     private SpeechRecognitionController mSpeechRecognitionController = null;
     private QuestionController mQuestionController = null;
@@ -47,6 +51,15 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private TextView mTextViewVolume = null;
     private int VolumeTextViewId = R.id.textview_volume_level;
 
+    private String mNextQuestion = "";
+
+    // Animation
+    private TranslateAnimation mQuestionSlideInAnimation = null;
+    private static int SLIDE_IN_ANIM_DURATION = 500;
+
+    private TranslateAnimation mQuestionSlideOutAnimation = null;
+    private static int SLIDE_OUT_ANIM_DURATION = 500;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +69,7 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.mQuestionLevel = i.getIntExtra("question_level", 1);
 
         this.setUiEventHandlers();
+        this.initializeAnimation();
 
         this.mSpeechRecognitionController = new SpeechRecognitionController(this, this);
         this.mQuestionController = new QuestionController(this, this);
@@ -133,20 +147,42 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     @Override
     public void onQuestionInitialized(String firstQuestion) {
         DebugUtil.DebugLog(this.getClass().toString(), "onQuestionInitialized");
-        this.setQuestion(firstQuestion);
-
+        this.storeNextQuestion(firstQuestion);
+        this.setNewQuestion();
     }
 
     @Override
     public void onQuestionUpdated(String newQuestion) {
         DebugUtil.DebugLog(this.getClass().toString(), "onQuestionUpdated");
-        this.setQuestion(newQuestion);
+        this.storeNextQuestion(newQuestion);
+        this.destroyOldQuestion();
     }
 
     @Override
     public void onQuestionEnded() {
 
         this.processFinalize();
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+
+        if(animation.equals(this.mQuestionSlideOutAnimation))
+        {
+            DebugUtil.DebugLog(this.getClass().toString(), "SlideOutEnded");
+            this.setNewQuestion();
+        }
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 
     /* Private Methods */
@@ -169,6 +205,20 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.mTextViewVolume = (TextView)findViewById(this.VolumeTextViewId);
     }
 
+    private void initializeAnimation()
+    {
+        Point windowSize = ScreenUtil.GetWindowSize(this);
+
+        this.mQuestionSlideInAnimation = new TranslateAnimation(windowSize.x, 0, 0, 0);
+        this.mQuestionSlideInAnimation.setDuration(this.SLIDE_IN_ANIM_DURATION);
+        this.mQuestionSlideInAnimation.setAnimationListener(this);
+
+        this.mQuestionSlideOutAnimation = new TranslateAnimation(0, -windowSize.x, 0, 0);
+        this.mQuestionSlideOutAnimation.setDuration(this.SLIDE_OUT_ANIM_DURATION);
+        this.mQuestionSlideOutAnimation.setAnimationListener(this);
+
+    }
+
     private void startRecognition()
     {
         DebugUtil.DebugLog(this.getClass().toString(), "startRecognition");
@@ -180,10 +230,18 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         DebugUtil.DebugLog(this.getClass().toString(), "startReferenceSpeaking");
     }
 
-    private void setQuestion(String questionText)
+    private void destroyOldQuestion()
     {
-        DebugUtil.DebugLog(this.getClass().toString(), "setQuestion");
-        this.mTextViewCurrentQuestion.setText(questionText);
+        DebugUtil.DebugLog(this.getClass().toString(), "destroyOldQuestion");
+        this.mTextViewCurrentQuestion.startAnimation(this.mQuestionSlideOutAnimation);
+    }
+
+    private void setNewQuestion()
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "setNewQuestion");
+        this.mTextViewCurrentQuestion.setText(this.mNextQuestion);
+
+        this.mTextViewCurrentQuestion.startAnimation(this.mQuestionSlideInAnimation);
     }
 
     private void processFinalize()
@@ -199,5 +257,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.finish();
     }
 
+    private void storeNextQuestion(String nextQuestion)
+    {
+        this.mNextQuestion = nextQuestion;
+    }
 
 }

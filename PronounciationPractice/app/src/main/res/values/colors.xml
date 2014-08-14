@@ -5,7 +5,7 @@
     <color name="controller_linearlayout_background_color">#AAAAFF</color>
     <color name="pronounciation_practice_background">#00BB00</color>
     <color name="pronounciation_practice_question_display_background">#DDDDDD</color>
-    <color name="pronounciation_practice_user_control_background">#00A9CC</color>
+    <color name="pronounciation_practice_user_control_background">#1660FF</color>
     <color name="button_background_test">#FFFFFF</color>
     <color name="text_color_white">#FFFFFF</color>
     <color name="text_color_gray">#AAAAAA</color>
