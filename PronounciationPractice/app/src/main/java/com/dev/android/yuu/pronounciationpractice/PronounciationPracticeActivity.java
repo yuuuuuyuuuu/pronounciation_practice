@@ -9,18 +9,21 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dev.android.yuu.pronounciationpractice.R;
+import com.dev.android.yuu.pronounciationpractice.controller.QuestionController;
 import com.dev.android.yuu.pronounciationpractice.controller.SpeechRecognitionController;
+import com.dev.android.yuu.pronounciationpractice.custoninterface.QuestionModelListener;
 import com.dev.android.yuu.pronounciationpractice.custoninterface.SpeechRecognitionInterface;
 import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
 import com.dev.android.yuu.pronounciationpractice.view.UserControllerView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
-public class PronounciationPracticeActivity extends Activity implements View.OnClickListener, SpeechRecognitionInterface{
+public class PronounciationPracticeActivity extends Activity implements View.OnClickListener, SpeechRecognitionInterface, QuestionModelListener{
 
-
-    // private UserControllerView mUserControllerView = null;
     private SpeechRecognitionController mSpeechRecognitionController = null;
+    private QuestionController mQuestionController = null;
 
     // UI
     private Button mButtonListen = null;
@@ -28,6 +31,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
     private Button mButtonSpeak = null;
     private int SpeakButtonId = R.id.button_user_control_speak;
+
+    private TextView mTextViewCurrentQuestion = null;
+    private int CurrentQuestionTextViewId = R.id.textview_current_question;
 
     private TextView mTextViewResult = null;
     private int ResultTextViewId = R.id.textview_user_pronounciation_text;
@@ -43,8 +49,12 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pronounciation_practice);
 
-        this.mSpeechRecognitionController = new SpeechRecognitionController(this, this);
         this.setUiEventHandlers();
+
+        this.mSpeechRecognitionController = new SpeechRecognitionController(this, this);
+        this.mQuestionController = new QuestionController(this, this);
+
+
     }
 
     @Override
@@ -87,42 +97,17 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         }
     }
 
-    /* Private Methods */
-    private void setUiEventHandlers()
-    {
-        DebugUtil.DebugLog(this.getClass().toString(), "setUiEventHandlers");
-
-        this.mButtonListen = (Button)findViewById(this.ListenButtonId);
-        this.mButtonSpeak = (Button)findViewById(this.SpeakButtonId);
-
-        DebugUtil.AssertNotNull("mButtonListen is null.", this.mButtonListen);
-        DebugUtil.AssertNotNull("mButtonSpeak is null.", this.mButtonSpeak);
-
-        this.mButtonListen.setOnClickListener(this);
-        this.mButtonSpeak.setOnClickListener(this);
-
-        this.mTextViewResult = (TextView)findViewById(this.ResultTextViewId);
-        this.mTextViewScore = (TextView)findViewById(this.ScoreTextViewId);
-        this.mTextViewVolume = (TextView)findViewById(this.VolumeTextViewId);
-    }
-
-    private void startRecognition()
-    {
-        DebugUtil.DebugLog(this.getClass().toString(), "startRecognition");
-        this.mSpeechRecognitionController.startListening();
-    }
-
-    private void startReferenceSpeaking(String text)
-    {
-        DebugUtil.DebugLog(this.getClass().toString(), "startReferenceSpeaking");
-    }
 
 
     @Override
     public void onSpeechResult(ArrayList<String> results, float[] scores) {
 
-        this.mTextViewResult.setText(results.get(0));
+        String firstCandidate = results.get(0);
+
+        this.mTextViewResult.setText(firstCandidate);
         this.mTextViewScore.setText(String.valueOf(scores[0]));
+
+        this.mQuestionController.checkAnswer(firstCandidate);
 
     }
 
@@ -140,4 +125,43 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     public void onRmsChanged(float volume) {
         this.mTextViewVolume.setText(String.valueOf(volume));
     }
+
+    @Override
+    public void onQuestionUpdated(String newQuestion) {
+
+        this.mTextViewCurrentQuestion.setText(newQuestion);
+
+    }
+
+    /* Private Methods */
+    private void setUiEventHandlers()
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "setUiEventHandlers");
+
+        this.mButtonListen = (Button)findViewById(this.ListenButtonId);
+        this.mButtonSpeak = (Button)findViewById(this.SpeakButtonId);
+
+        DebugUtil.AssertNotNull("mButtonListen is null.", this.mButtonListen);
+        DebugUtil.AssertNotNull("mButtonSpeak is null.", this.mButtonSpeak);
+
+        this.mButtonListen.setOnClickListener(this);
+        this.mButtonSpeak.setOnClickListener(this);
+
+        this.mTextViewCurrentQuestion = (TextView)findViewById(this.CurrentQuestionTextViewId);
+        this.mTextViewResult = (TextView)findViewById(this.ResultTextViewId);
+        this.mTextViewScore = (TextView)findViewById(this.ScoreTextViewId);
+        this.mTextViewVolume = (TextView)findViewById(this.VolumeTextViewId);
+    }
+
+    private void startRecognition()
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "startRecognition");
+        this.mSpeechRecognitionController.startListening();
+    }
+
+    private void startReferenceSpeaking(String text)
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "startReferenceSpeaking");
+    }
+
 }

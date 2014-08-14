@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
-            android:id="@+id/textview_recognizer_status"
+            android:id="@+id/textview_current_question"
             android:textColor="@color/text_color_blue" />
 
         <TextView
