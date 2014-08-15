@@ -83,6 +83,11 @@ public class UserDataRecordUtil{
 
     }
 
+    public static void Reset()
+    {
+        UserDataRecordUtil.userScores = new ArrayList<UserScoreModel>();
+    }
+
     public static void UpdateScore(int level, float score, boolean isDone)
     {
         if(null ==  UserDataRecordUtil.userScores) return;

@@ -1,6 +1,8 @@
 package com.dev.android.yuu.pronounciationpractice;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -25,7 +27,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class PronounciationPracticeActivity extends Activity implements View.OnClickListener, SpeechRecognitionInterface, QuestionModelListener, Animation.AnimationListener {
+public class PronounciationPracticeActivity extends Activity implements View.OnClickListener, DialogInterface.OnClickListener, SpeechRecognitionInterface, QuestionModelListener, Animation.AnimationListener {
 
     private SpeechRecognitionController mSpeechRecognitionController = null;
     private QuestionController mQuestionController = null;
@@ -58,6 +60,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private int QuestionNumStatusId = R.id.textview_question_num_status;
 
     private String mNextQuestion = "";
+
+    // Dialog
+    private AlertDialog.Builder mScoreDialog = null;
 
     // Animation
     private TranslateAnimation mQuestionSlideInAnimation = null;
@@ -169,7 +174,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     @Override
     public void onQuestionEnded() {
 
-        this.processFinalize();
+        this.storeNextQuestion("You finished!!");
+        this.mScoreDialog.show();
+
     }
 
     @Override
@@ -196,6 +203,10 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     /* Private Methods */
     private void initialize()
     {
+        this.mScoreDialog = new AlertDialog.Builder(this);
+        this.mScoreDialog.setTitle("Score");
+        this.mScoreDialog.setPositiveButton("OK", this);
+
         String firstQuestion = this.mQuestionController.getCurrentQuestion();
 
         this.storeNextQuestion(firstQuestion);
@@ -287,4 +298,12 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.mNextQuestion = nextQuestion;
     }
 
+    @Override
+    public void onClick(DialogInterface dialogInterface, int whichButton)
+    {
+        if(whichButton == DialogInterface.BUTTON_POSITIVE)
+        {
+            this.processFinalize();
+        }
+    }
 }
