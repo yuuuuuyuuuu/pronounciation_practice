@@ -1,6 +1,7 @@
 package com.dev.android.yuu.pronounciationpractice.model;
 
 import com.dev.android.yuu.pronounciationpractice.controller.QuestionController;
+import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,6 @@ public class QuestionModel {
         if(this.mQuestions.size() == this.mCurrentQuestionIndex)
         {
             this.mCurrentQuestionIndex = this.mQuestions.size() - 1;
-            this.mQuestionController.onQuestionEnded();
         }
 
         return this.mQuestions.get(this.mCurrentQuestionIndex);
@@ -69,8 +69,27 @@ public class QuestionModel {
         return this.mQuestions.size();
     }
 
-    public int getCurrentIndex() { return this.mCurrentQuestionIndex; }
+    public int getCurrentIndex()
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "getCurrentIndex", String.valueOf(this.mCurrentQuestionIndex));
+        return this.mCurrentQuestionIndex;
+    }
 
+    public boolean hasNext()
+    {
+        boolean result = false;
+
+        if(this.mCurrentQuestionIndex == this.mQuestions.size() - 1)
+        {
+            result = false;
+        }
+        else
+        {
+            result = true;
+        }
+
+        return result;
+    }
     /* Private Methods */
     private void initialize()
     {
@@ -88,7 +107,6 @@ public class QuestionModel {
         this.mQuestions.add("Hello");
         this.mQuestions.add("Contribution");
         this.mQuestions.add("Mobile");
-        this.mQuestions.add("Coincidence");
         this.mQuestions.add("Refrigerator");
 
         result = true;

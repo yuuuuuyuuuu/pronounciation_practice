@@ -7,33 +7,35 @@ import java.io.Serializable;
  */
 public class UserScoreModel implements Serializable{
 
-    private int level = -1;
-    private float score = 0;
-    private boolean isDone = false;
+    private int mLevel = -1;
+    private float mScore = 0;
+    private boolean mIsDone = false;
 
     public UserScoreModel()
     {
 
     }
 
-    public void setData(int level, float score, boolean done)
+    public void setData(int level, float score, boolean isDone)
     {
-
+        this.mLevel = level;
+        this.mScore = score;
+        this.mIsDone = isDone;
     }
 
     public int getLevel()
     {
-        return this.level;
+        return this.mLevel;
     }
 
     public float getScore()
     {
-        return this.score;
+        return this.mScore;
     }
 
     public boolean getDoneFlag()
     {
-        return this.isDone;
+        return this.mIsDone;
     }
 
 }

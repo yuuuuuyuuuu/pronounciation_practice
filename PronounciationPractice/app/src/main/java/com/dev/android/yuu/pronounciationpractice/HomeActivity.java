@@ -14,9 +14,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.dev.android.yuu.pronounciationpractice.R;
+import com.dev.android.yuu.pronounciationpractice.model.LevelComparator;
+import com.dev.android.yuu.pronounciationpractice.model.UserScoreModel;
 import com.dev.android.yuu.pronounciationpractice.util.UserDataRecordUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeActivity extends Activity implements View.OnClickListener {
 
@@ -34,9 +37,6 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_home);
 
         this.createLevelButtons();
-
-        UserDataRecordUtil.Load(this);
-        UserDataRecordUtil.Save(this);
     }
 
 
@@ -84,6 +84,11 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200);
         lp.setMargins(50, 20, 50, 20);
 
+        // User scores
+        UserDataRecordUtil.Load(this);
+        ArrayList<UserScoreModel> userScores = UserDataRecordUtil.GetScores();
+        Collections.sort(userScores, new LevelComparator());
+
         for(int i = 0; i < this.LEVEL_BUTTON_NUM; i++)
         {
             Button button = new Button(this);
@@ -92,6 +97,12 @@ public class HomeActivity extends Activity implements View.OnClickListener {
             button.setTag(i + 1);
             button.setOnClickListener(this);
             button.setBackground(getResources().getDrawable(R.drawable.button_blue_basic));
+
+            if(i <= userScores.size() && 0 != i)
+            {
+                UserScoreModel usm = userScores.get(i - 1);
+                button.setEnabled(usm.getDoneFlag());
+            }
 
             this.mLevelButtons.add(button);
             this.mLinearLayoutLevelButtons.addView(button);

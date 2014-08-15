@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.dev.android.yuu.pronounciationpractice.custoninterface.QuestionModelListener;
 import com.dev.android.yuu.pronounciationpractice.model.QuestionModel;
+import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
 
 /**
  * Created by Chieko on 8/14/14.
@@ -23,7 +24,6 @@ public class QuestionController {
         this.mListener = listener;
 
         this.mQuestionModel = new QuestionModel(this);
-        //this.mListener.onQuestionInitialized(this.mQuestionModel.Current());
     }
 
     /* Public Methods */
@@ -31,15 +31,24 @@ public class QuestionController {
     {
         boolean result = false;
 
+        this.mUserTrialNum++;
+
         String currentTarget = this.mQuestionModel.Current();
 
         if(userAnswer.toLowerCase().equals(currentTarget.toLowerCase()))
         {
-            this.mListener.onQuestionUpdated(this.mQuestionModel.Next());
             result = true;
-        }
 
-        this.mUserTrialNum++;
+            if(this.mQuestionModel.hasNext())
+            {
+                this.mListener.onQuestionUpdated(this.mQuestionModel.Next());
+
+            }
+            else
+            {
+                this.mListener.onQuestionEnded();
+            }
+        }
 
         return result;
     }
@@ -51,16 +60,23 @@ public class QuestionController {
 
     public int getCurrentIndex(){ return this.mQuestionModel.getCurrentIndex(); }
 
+    public int getUserTrial(){return this.mUserTrialNum; }
+
     public String getCurrentQuestion(){return this.mQuestionModel.Current();}
+
+    public float getScore()
+    {
+        float score = 100 * ((float)(this.mQuestionModel.getCurrentIndex() + 1) / (float)this.mUserTrialNum);
+
+        DebugUtil.DebugLog(this.getClass().toString(), "getScore:", String.valueOf(score));
+        DebugUtil.DebugLog(this.getClass().toString(), "mUserTrial:", String.valueOf(this.mUserTrialNum));
+
+        return score;
+    }
 
     public void resetUserTrial()
     {
         this.mUserTrialNum = 0;
-    }
-
-    public void onQuestionEnded()
-    {
-        this.mListener.onQuestionEnded();
     }
 
     /* Private Methods */

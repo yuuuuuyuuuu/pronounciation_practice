@@ -21,6 +21,7 @@ import com.dev.android.yuu.pronounciationpractice.custoninterface.QuestionModelL
 import com.dev.android.yuu.pronounciationpractice.custoninterface.SpeechRecognitionInterface;
 import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
 import com.dev.android.yuu.pronounciationpractice.util.ScreenUtil;
+import com.dev.android.yuu.pronounciationpractice.util.UserDataRecordUtil;
 import com.dev.android.yuu.pronounciationpractice.view.UserControllerView;
 
 import org.w3c.dom.Text;
@@ -70,6 +71,8 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
     private TranslateAnimation mQuestionSlideOutAnimation = null;
     private static int SLIDE_OUT_ANIM_DURATION = 500;
+
+    private static float USER_ACHIEVEMENT_THRESHOLD = 90;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,8 +131,6 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         }
     }
 
-
-
     @Override
     public void onSpeechResult(ArrayList<String> results, float[] scores) {
 
@@ -175,6 +176,8 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     public void onQuestionEnded() {
 
         this.storeNextQuestion("You finished!!");
+
+        this.mScoreDialog.setMessage("Score: " + String.valueOf(this.mQuestionController.getScore()));
         this.mScoreDialog.show();
 
     }
@@ -282,6 +285,14 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
     private void processFinalize()
     {
+        // Save score
+        float score = this.mQuestionController.getScore();
+        boolean isDone = false;
+        if(this.USER_ACHIEVEMENT_THRESHOLD <= score) isDone = true;
+
+        UserDataRecordUtil.UpdateScore(this.mQuestionLevel, score, isDone);
+        UserDataRecordUtil.Save(this);
+
         this.mSpeechRecognitionController.destroyRecognizer();
 
         try {

@@ -20,7 +20,7 @@ import java.util.ArrayList;
  */
 public class UserDataRecordUtil{
 
-    private static ArrayList<UserScoreModel> userScores = null;
+    private static ArrayList<UserScoreModel> userScores = new ArrayList<UserScoreModel>();
 
     private static String DATA_FILE_NAME = "pc_score_data.dat";
 
@@ -90,7 +90,10 @@ public class UserDataRecordUtil{
 
     public static void UpdateScore(int level, float score, boolean isDone)
     {
-        if(null ==  UserDataRecordUtil.userScores) return;
+        if(null ==  UserDataRecordUtil.userScores)
+        {
+            UserDataRecordUtil.userScores = new ArrayList<UserScoreModel>();
+        }
 
         for(UserScoreModel userScore : UserDataRecordUtil.userScores)
         {
@@ -106,6 +109,11 @@ public class UserDataRecordUtil{
         UserScoreModel newScoreModel = new UserScoreModel();
         newScoreModel.setData(level, score, isDone);
         UserDataRecordUtil.userScores.add(newScoreModel);
+    }
+
+    public static ArrayList<UserScoreModel> GetScores()
+    {
+        return UserDataRecordUtil.userScores;
     }
 
 
