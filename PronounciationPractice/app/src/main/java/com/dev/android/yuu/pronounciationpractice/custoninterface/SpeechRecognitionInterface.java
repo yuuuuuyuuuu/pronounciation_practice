@@ -11,5 +11,6 @@ public interface SpeechRecognitionInterface {
     public abstract void onReadyForSpeech();
     public abstract void onEndOfSpeech();
     public abstract void onRmsChanged(float volume);
+    public abstract void onError(int errorCode);
 
 }

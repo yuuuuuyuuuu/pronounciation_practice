@@ -7,7 +7,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_pronounciation_practice">PronounciationPracticeActivity</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
-    <string name="pronounciation_practice_user_control_speak">Speak</string>
+    <string name="pronounciation_practice_user_control_speak">発音</string>
     <string name="pronounciation_practice_user_control_listen">Listen</string>
     <string name="home_title">レベルの選択</string>
 

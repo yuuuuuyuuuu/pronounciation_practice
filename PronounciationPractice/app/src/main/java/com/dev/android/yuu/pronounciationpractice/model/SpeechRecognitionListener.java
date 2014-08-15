@@ -52,8 +52,12 @@ public class SpeechRecognitionListener implements RecognitionListener{
     }
 
     @Override
-    public void onError(int i) {
+    public void onError(int i)
+    {
+
         DebugUtil.DebugLog(this.getClass().toString(), "onError");
+
+        this.mSpeechRecognitionController.onError(i);
     }
 
     @Override

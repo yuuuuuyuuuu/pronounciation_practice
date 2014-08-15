@@ -91,6 +91,12 @@ public class SpeechRecognitionController {
         this.mSpeechRecognitionInterface.onEndOfSpeech();
     }
 
+    public void onError(int errorCode)
+    {
+        this.mSpeechRecognitionInterface.onError(errorCode);
+    }
+
+
     /* Private Methods */
     private void initialize()
     {

@@ -8,6 +8,7 @@
     <color name="pronounciation_practice_user_control_background">#1660FF</color>
     <color name="level_button_default">#CCCCCC</color>
     <color name="level_button_pressed">#1660FF</color>
+    <color name="level_button_default_light">#EEEEEE</color>
     <color name="button_background_test">#FFFFFF</color>
     <color name="text_color_white">#FFFFFF</color>
     <color name="text_color_gray">#AAAAAA</color>

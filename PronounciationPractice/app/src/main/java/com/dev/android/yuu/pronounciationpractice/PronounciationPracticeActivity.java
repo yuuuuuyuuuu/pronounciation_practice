@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,9 +38,6 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private int mQuestionLevel = 0;
 
     // UI
-    private Button mButtonListen = null;
-    private int ListenButtonId = R.id.button_user_control_listen;
-
     private Button mButtonSpeak = null;
     private int SpeakButtonId = R.id.button_user_control_speak;
 
@@ -72,6 +70,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
     private TranslateAnimation mQuestionSlideOutAnimation = null;
     private static int SLIDE_OUT_ANIM_DURATION = 500;
+
+    private RotateAnimation mMicRotationAnimation = null;
+    private static int MIC_ROTATION_ANIM_DURATION = 800;
 
     private static float USER_ACHIEVEMENT_THRESHOLD = 60;
 
@@ -120,13 +121,8 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
         int viewId = view.getId();
 
-        if(viewId == this.ListenButtonId)
-        {
-            DebugUtil.DebugLog(this.getClass().toString(), "ListenButton clicked");
 
-            this.startReferenceSpeaking("test");
-        }
-        else if(viewId == this.SpeakButtonId)
+        if(viewId == this.SpeakButtonId)
         {
             DebugUtil.DebugLog(this.getClass().toString(), "SpeakButton clicked");
 
@@ -147,18 +143,29 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     }
 
     @Override
-    public void onReadyForSpeech() {
-
+    public void onReadyForSpeech()
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "onReadyForSpeech");
+        this.mButtonSpeak.startAnimation(this.mMicRotationAnimation);
     }
 
     @Override
-    public void onEndOfSpeech() {
-
+    public void onEndOfSpeech()
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "onEndOfSpeech");
+        this.mButtonSpeak.clearAnimation();
     }
 
     @Override
     public void onRmsChanged(float volume) {
         this.mTextViewVolume.setText(String.valueOf(volume));
+    }
+
+    @Override
+    public void onError(int errorCode)
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "onError", "errorCode:" + String.valueOf(errorCode));
+        this.mButtonSpeak.clearAnimation();
     }
 
     @Override
@@ -223,13 +230,8 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     {
         DebugUtil.DebugLog(this.getClass().toString(), "setUiEventHandlers");
 
-        this.mButtonListen = (Button)findViewById(this.ListenButtonId);
         this.mButtonSpeak = (Button)findViewById(this.SpeakButtonId);
 
-        DebugUtil.AssertNotNull("mButtonListen is null.", this.mButtonListen);
-        DebugUtil.AssertNotNull("mButtonSpeak is null.", this.mButtonSpeak);
-
-        this.mButtonListen.setOnClickListener(this);
         this.mButtonSpeak.setOnClickListener(this);
 
         this.mTextViewCurrentQuestion = (TextView)findViewById(this.CurrentQuestionTextViewId);
@@ -253,6 +255,10 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.mQuestionSlideOutAnimation = new TranslateAnimation(0, -windowSize.x, 0, 0);
         this.mQuestionSlideOutAnimation.setDuration(this.SLIDE_OUT_ANIM_DURATION);
         this.mQuestionSlideOutAnimation.setAnimationListener(this);
+
+        this.mMicRotationAnimation = new RotateAnimation(0, -360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        this.mMicRotationAnimation.setDuration(this.MIC_ROTATION_ANIM_DURATION);
+        this.mMicRotationAnimation.setRepeatCount(Animation.INFINITE);
 
     }
 
