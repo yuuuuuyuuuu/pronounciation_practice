@@ -105,6 +105,15 @@
             android:background="@drawable/speak_button_round"
             android:textColor="@color/text_color_gray"
             android:textSize="16pt" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_label_skip"
+            android:id="@+id/button_skip"
+            android:background="@drawable/speak_button_round_small"
+            android:textColor="@color/text_color_blue"
+            android:textSize="8pt" />
     </LinearLayout>
 
 </LinearLayout>

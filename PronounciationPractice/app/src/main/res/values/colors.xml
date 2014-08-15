@@ -11,6 +11,7 @@
     <color name="level_button_default_light">#EEEEEE</color>
     <color name="mic_on_background">#FF5555</color>
     <color name="mic_off_background">#1660FF</color>
+    <color name="custom_button_disabled">#777777</color>
     <color name="text_color_white">#FFFFFF</color>
     <color name="text_color_gray">#AAAAAA</color>
     <color name="text_color_blue">#0000FF</color>

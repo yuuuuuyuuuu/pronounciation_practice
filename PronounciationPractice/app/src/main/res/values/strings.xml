@@ -10,5 +10,6 @@
     <string name="pronounciation_practice_user_control_speak">発音</string>
     <string name="pronounciation_practice_user_control_listen">Listen</string>
     <string name="home_title">レベルの選択</string>
+    <string name="button_label_skip">スキップ</string>
 
 </resources>

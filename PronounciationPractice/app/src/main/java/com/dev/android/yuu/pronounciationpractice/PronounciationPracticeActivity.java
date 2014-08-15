@@ -42,6 +42,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private Button mButtonSpeak = null;
     private int SpeakButtonId = R.id.button_user_control_speak;
 
+    private Button mButtonSkip = null;
+    private int SkipButtonId = R.id.button_skip;
+
     private TextView mTextViewCurrentQuestion = null;
     private int CurrentQuestionTextViewId = R.id.textview_current_question;
 
@@ -132,6 +135,11 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
             this.startRecognition();
         }
+        else if(viewId == this.SkipButtonId)
+        {
+            DebugUtil.DebugLog(this.getClass().toString(), "SkipButton clicked");
+        }
+
     }
 
     @Override
@@ -253,6 +261,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
         this.mButtonSpeak.setOnClickListener(this);
 
+        this.mButtonSkip = (Button)findViewById(this.SkipButtonId);
+        this.mButtonSkip.setOnClickListener(this);
+
         this.mTextViewCurrentQuestion = (TextView)findViewById(this.CurrentQuestionTextViewId);
         this.mTextViewResult = (TextView)findViewById(this.ResultTextViewId);
         this.mTextViewScore = (TextView)findViewById(this.ScoreTextViewId);
@@ -343,11 +354,13 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     {
         this.mButtonSpeak.startAnimation(this.mMicRotationAnimation);
         this.mLinearLayoutMic.setBackgroundColor(getResources().getColor(R.color.mic_on_background));
+        this.mButtonSkip.setEnabled(false);
     }
 
     private void setToMicOffMode()
     {
         this.mButtonSpeak.clearAnimation();
         this.mLinearLayoutMic.setBackgroundColor(getResources().getColor(R.color.mic_off_background));
+        this.mButtonSkip.setEnabled(true);
     }
 }
