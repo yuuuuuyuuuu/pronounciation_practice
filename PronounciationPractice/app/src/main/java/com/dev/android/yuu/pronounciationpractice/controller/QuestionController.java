@@ -18,12 +18,15 @@ public class QuestionController {
 
     private int mUserTrialNum = 0;
 
-    public QuestionController(Context context, QuestionModelListener listener)
+    private int mLevel = 0;
+
+    public QuestionController(Context context, QuestionModelListener listener, int level)
     {
         this.mContext = context;
         this.mListener = listener;
+        this.mLevel = level;
 
-        this.mQuestionModel = new QuestionModel(this);
+        this.mQuestionModel = new QuestionModel(this, this.mLevel);
     }
 
     /* Public Methods */

@@ -2,6 +2,7 @@ package com.dev.android.yuu.pronounciationpractice.model;
 
 import com.dev.android.yuu.pronounciationpractice.controller.QuestionController;
 import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
+import com.dev.android.yuu.pronounciationpractice.util.QuestionDataUtil;
 
 import java.util.ArrayList;
 
@@ -16,10 +17,12 @@ public class QuestionModel {
     private int mCurrentQuestionLevel = -1;
     private int mCurrentQuestionIndex = -1;
 
+    private int mLevel = 0;
 
-    public QuestionModel(QuestionController questionController)
+    public QuestionModel(QuestionController questionController, int level)
     {
         this.mQuestionController = questionController;
+        this.mLevel = level;
 
         this.initialize();
     }
@@ -102,13 +105,16 @@ public class QuestionModel {
     {
         boolean result = false;
 
+        /*
         // test data
         this.mQuestions = new ArrayList<String>();
         this.mQuestions.add("Hello");
         this.mQuestions.add("Contribution");
         this.mQuestions.add("Mobile");
         this.mQuestions.add("Refrigerator");
+        */
 
+        this.mQuestions = QuestionDataUtil.GetQuestion(this.mLevel);
         result = true;
 
         return result;

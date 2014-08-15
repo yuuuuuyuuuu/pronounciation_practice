@@ -94,7 +94,7 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.initializeAnimation();
 
         this.mSpeechRecognitionController = new SpeechRecognitionController(this, this);
-        this.mQuestionController = new QuestionController(this, this);
+        this.mQuestionController = new QuestionController(this, this, this.mQuestionLevel);
 
         this.initialize();
     }
