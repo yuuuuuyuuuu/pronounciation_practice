@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -30,10 +31,16 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     private LinearLayout mLinearLayoutLevelButtons = null;
     private int LinearLayoutLevelButtonId = R.id.linearlayout_level_button;
 
+    // Intent ID
+    private final int INTENT_PRONOUNCIATION_PRACTICE_ACTIVITY = 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_home);
 
         this.createLevelButtons();
@@ -76,8 +83,19 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     }
 
     /* Private Methods */
+    private void clearLevelButtons()
+    {
+        if(null == this.mLinearLayoutLevelButtons)
+        {
+            this.mLinearLayoutLevelButtons = (LinearLayout)findViewById(this.LinearLayoutLevelButtonId);
+        }
+
+        this.mLinearLayoutLevelButtons.removeAllViews();
+    }
+
     private void createLevelButtons()
     {
+
         this.mLinearLayoutLevelButtons = (LinearLayout)findViewById(this.LinearLayoutLevelButtonId);
         this.mLevelButtons = new ArrayList<Button>();
 
@@ -93,16 +111,83 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         {
             Button button = new Button(this);
             button.setLayoutParams(lp);
-            button.setText("Level " + String.valueOf(i + 1));
             button.setTag(i + 1);
             button.setOnClickListener(this);
             button.setBackground(getResources().getDrawable(R.drawable.button_blue_basic));
 
-            if(i <= userScores.size() && 0 != i)
+            String buttonLabel = "初級 " + String.valueOf(i + 1);
+
+            if(0 == i)
+            {
+                if(0 < userScores.size())
+                {
+                    UserScoreModel usm = userScores.get(0);
+                    buttonLabel = "初級 "  + String.valueOf(i + 1) + "   スコア：" + String.valueOf(usm.getScore());
+                }
+                else
+                {
+                    buttonLabel = "初級 "  + String.valueOf(i + 1) + "   未チャレンジ";
+                }
+
+                button.setEnabled(true);
+            }
+            else
+            {
+                if(i < userScores.size())
+                {
+                    UserScoreModel usm = userScores.get(i);
+                    buttonLabel = "初級 "  + String.valueOf(i + 1) + "   スコア：" + String.valueOf(usm.getScore());
+                    button.setEnabled(true);
+                }
+                else if(i == userScores.size())
+                {
+                    UserScoreModel usm_prev = userScores.get(i - 1);
+                    buttonLabel = "初級 "  + String.valueOf(i + 1) + "   未チャレンジ";
+                    button.setEnabled(usm_prev.getDoneFlag());
+                }
+                else
+                {
+                    buttonLabel = "初級 "  + String.valueOf(i + 1) + "   未チャレンジ";
+                    button.setEnabled(false);
+                }
+            }
+
+            /*
+            if(1 <= userScores.size() && i <= userScores.size() && 0 != i)
             {
                 UserScoreModel usm = userScores.get(i - 1);
                 button.setEnabled(usm.getDoneFlag());
+                buttonLabel = "初級 "  + String.valueOf(i + 1) + "   スコア：" + String.valueOf(usm.getScore());
             }
+            else if(0 == i)
+            {
+                UserScoreModel usm = null;
+                if(0 < userScores.size())
+                {
+                    usm = userScores.get(0);
+                }
+
+                if(null != usm && 1 == usm.getLevel())
+                {
+                    buttonLabel = "初級 "  + String.valueOf(i + 1) + "   スコア：" + String.valueOf(usm.getScore());
+                }
+                else
+                {
+                    buttonLabel = "初級 "  + String.valueOf(i + 1) + "   未チャレンジ";
+                }
+
+                button.setEnabled(true);
+            }
+            else
+            {
+                buttonLabel = "初級 "  + String.valueOf(i + 1) + "   未チャレンジ";
+                button.setEnabled(false);
+            }
+            */
+
+
+            button.setTextSize(18);
+            button.setText(buttonLabel);
 
             this.mLevelButtons.add(button);
             this.mLinearLayoutLevelButtons.addView(button);
@@ -112,8 +197,22 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     {
         Intent i = new Intent(HomeActivity.this, PronounciationPracticeActivity.class);
         i.putExtra("question_level", level);
-        startActivity(i);
+        startActivityForResult(i, this.INTENT_PRONOUNCIATION_PRACTICE_ACTIVITY);
 
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(this.INTENT_PRONOUNCIATION_PRACTICE_ACTIVITY == requestCode)
+        {
+            // relaod user scores
+            UserDataRecordUtil.Load(this);
+            this.clearLevelButtons();
+            this.createLevelButtons();
+        }
     }
 
 

@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Select Level"
+            android:text="@string/home_title"
             android:id="@+id/textView"
             android:textSize="14pt"
             android:textColor="@color/text_color_white" />

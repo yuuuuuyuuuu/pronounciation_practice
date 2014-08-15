@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
@@ -72,11 +73,13 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private TranslateAnimation mQuestionSlideOutAnimation = null;
     private static int SLIDE_OUT_ANIM_DURATION = 500;
 
-    private static float USER_ACHIEVEMENT_THRESHOLD = 90;
+    private static float USER_ACHIEVEMENT_THRESHOLD = 60;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_pronounciation_practice);
 
         Intent i = getIntent();
