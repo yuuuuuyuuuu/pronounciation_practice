@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dev.android.yuu.pronounciationpractice.R;
@@ -59,6 +60,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private TextView mTextViewQuestionNumStatus = null;
     private int QuestionNumStatusId = R.id.textview_question_num_status;
 
+    private LinearLayout mLinearLayoutMic = null;
+    private int LinearLayoutMic = R.id.linearlayout_mic;
+
     private String mNextQuestion = "";
 
     // Dialog
@@ -72,7 +76,7 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private static int SLIDE_OUT_ANIM_DURATION = 500;
 
     private RotateAnimation mMicRotationAnimation = null;
-    private static int MIC_ROTATION_ANIM_DURATION = 800;
+    private static int MIC_ROTATION_ANIM_DURATION = 1200;
 
     private static float USER_ACHIEVEMENT_THRESHOLD = 60;
 
@@ -146,14 +150,18 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     public void onReadyForSpeech()
     {
         DebugUtil.DebugLog(this.getClass().toString(), "onReadyForSpeech");
-        this.mButtonSpeak.startAnimation(this.mMicRotationAnimation);
+
+        this.setToMicOnMode();
+
+
     }
 
     @Override
     public void onEndOfSpeech()
     {
         DebugUtil.DebugLog(this.getClass().toString(), "onEndOfSpeech");
-        this.mButtonSpeak.clearAnimation();
+
+        this.setToMicOffMode();
     }
 
     @Override
@@ -165,7 +173,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     public void onError(int errorCode)
     {
         DebugUtil.DebugLog(this.getClass().toString(), "onError", "errorCode:" + String.valueOf(errorCode));
-        this.mButtonSpeak.clearAnimation();
+
+        this.setToMicOffMode();
+
     }
 
     @Override
@@ -213,6 +223,15 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
     }
 
+    @Override
+    public void onClick(DialogInterface dialogInterface, int whichButton)
+    {
+        if(whichButton == DialogInterface.BUTTON_POSITIVE)
+        {
+            this.processFinalize();
+        }
+    }
+
     /* Private Methods */
     private void initialize()
     {
@@ -240,6 +259,8 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.mTextViewVolume = (TextView)findViewById(this.VolumeTextViewId);
         this.mTextViewLevel = (TextView)findViewById(this.LevelTextViewId);
         this.mTextViewQuestionNumStatus = (TextView)findViewById(this.QuestionNumStatusId);
+
+        this.mLinearLayoutMic = (LinearLayout)findViewById(R.id.linearlayout_mic);
 
         this.mTextViewLevel.setText("Level " + this.mQuestionLevel);
     }
@@ -318,12 +339,15 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.mNextQuestion = nextQuestion;
     }
 
-    @Override
-    public void onClick(DialogInterface dialogInterface, int whichButton)
+    private void setToMicOnMode()
     {
-        if(whichButton == DialogInterface.BUTTON_POSITIVE)
-        {
-            this.processFinalize();
-        }
+        this.mButtonSpeak.startAnimation(this.mMicRotationAnimation);
+        this.mLinearLayoutMic.setBackgroundColor(getResources().getColor(R.color.mic_on_background));
+    }
+
+    private void setToMicOffMode()
+    {
+        this.mButtonSpeak.clearAnimation();
+        this.mLinearLayoutMic.setBackgroundColor(getResources().getColor(R.color.mic_off_background));
     }
 }

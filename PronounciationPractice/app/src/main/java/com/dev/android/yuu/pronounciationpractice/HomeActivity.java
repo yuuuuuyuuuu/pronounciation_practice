@@ -115,6 +115,8 @@ public class HomeActivity extends Activity implements View.OnClickListener {
             button.setOnClickListener(this);
             button.setBackground(getResources().getDrawable(R.drawable.button_blue_basic));
 
+
+
             String buttonLabel = "初級 " + String.valueOf(i + 1);
 
             if(0 == i)
@@ -123,6 +125,10 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 {
                     UserScoreModel usm = userScores.get(0);
                     buttonLabel = "初級 "  + String.valueOf(i + 1) + "   スコア：" + String.valueOf(usm.getScore());
+
+                    float score = usm.getScore();
+                    int drawableId = this.getScoreBadge(score);
+                    button.setCompoundDrawablesWithIntrinsicBounds(drawableId, 0, 0, 0);
                 }
                 else
                 {
@@ -138,6 +144,10 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                     UserScoreModel usm = userScores.get(i);
                     buttonLabel = "初級 "  + String.valueOf(i + 1) + "   スコア：" + String.valueOf(usm.getScore());
                     button.setEnabled(true);
+
+                    float score = usm.getScore();
+                    int drawableId = this.getScoreBadge(score);
+                    button.setCompoundDrawablesWithIntrinsicBounds(drawableId, 0, 0, 0);
                 }
                 else if(i == userScores.size())
                 {
@@ -152,40 +162,6 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 }
             }
 
-            /*
-            if(1 <= userScores.size() && i <= userScores.size() && 0 != i)
-            {
-                UserScoreModel usm = userScores.get(i - 1);
-                button.setEnabled(usm.getDoneFlag());
-                buttonLabel = "初級 "  + String.valueOf(i + 1) + "   スコア：" + String.valueOf(usm.getScore());
-            }
-            else if(0 == i)
-            {
-                UserScoreModel usm = null;
-                if(0 < userScores.size())
-                {
-                    usm = userScores.get(0);
-                }
-
-                if(null != usm && 1 == usm.getLevel())
-                {
-                    buttonLabel = "初級 "  + String.valueOf(i + 1) + "   スコア：" + String.valueOf(usm.getScore());
-                }
-                else
-                {
-                    buttonLabel = "初級 "  + String.valueOf(i + 1) + "   未チャレンジ";
-                }
-
-                button.setEnabled(true);
-            }
-            else
-            {
-                buttonLabel = "初級 "  + String.valueOf(i + 1) + "   未チャレンジ";
-                button.setEnabled(false);
-            }
-            */
-
-
             button.setTextSize(18);
             button.setText(buttonLabel);
 
@@ -193,6 +169,27 @@ public class HomeActivity extends Activity implements View.OnClickListener {
             this.mLinearLayoutLevelButtons.addView(button);
         }
     }
+
+    private int getScoreBadge(float score)
+    {
+        int drawableId = 0;
+
+        if(60 < score && score < 80)
+        {
+            drawableId = R.drawable.face_crying_icon;
+        }
+        else if(80 <= score && score < 90)
+        {
+            drawableId = R.drawable.face_smile_icon;
+        }
+        else if(90 <= score && score <= 100)
+        {
+            drawableId = R.drawable.face_cool_icon;
+        }
+
+        return drawableId;
+    }
+
     private void startQuestionScreen(int level)
     {
         Intent i = new Intent(HomeActivity.this, PronounciationPracticeActivity.class);
