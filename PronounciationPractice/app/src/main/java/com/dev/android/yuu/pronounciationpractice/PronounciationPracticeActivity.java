@@ -54,6 +54,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private TextView mTextViewLevel = null;
     private int LevelTextViewId = R.id.textview_level;
 
+    private TextView mTextViewQuestionNumStatus = null;
+    private int QuestionNumStatusId = R.id.textview_question_num_status;
+
     private String mNextQuestion = "";
 
     // Animation
@@ -76,6 +79,8 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
         this.mSpeechRecognitionController = new SpeechRecognitionController(this, this);
         this.mQuestionController = new QuestionController(this, this);
+
+        this.initialize();
     }
 
     @Override
@@ -189,6 +194,14 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     }
 
     /* Private Methods */
+    private void initialize()
+    {
+        String firstQuestion = this.mQuestionController.getCurrentQuestion();
+
+        this.storeNextQuestion(firstQuestion);
+        this.setNewQuestion();
+    }
+
     private void setUiEventHandlers()
     {
         DebugUtil.DebugLog(this.getClass().toString(), "setUiEventHandlers");
@@ -207,6 +220,7 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.mTextViewScore = (TextView)findViewById(this.ScoreTextViewId);
         this.mTextViewVolume = (TextView)findViewById(this.VolumeTextViewId);
         this.mTextViewLevel = (TextView)findViewById(this.LevelTextViewId);
+        this.mTextViewQuestionNumStatus = (TextView)findViewById(this.QuestionNumStatusId);
 
         this.mTextViewLevel.setText("Level " + this.mQuestionLevel);
     }
@@ -246,6 +260,11 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     {
         DebugUtil.DebugLog(this.getClass().toString(), "setNewQuestion");
         this.mTextViewCurrentQuestion.setText(this.mNextQuestion);
+
+        int currentQuestionIndex = this.mQuestionController.getCurrentIndex();
+        int questionSize = this.mQuestionController.getQuestionSize();
+
+        this.mTextViewQuestionNumStatus.setText((currentQuestionIndex + 1) + " / " + questionSize);
 
         this.mTextViewCurrentQuestion.startAnimation(this.mQuestionSlideInAnimation);
     }

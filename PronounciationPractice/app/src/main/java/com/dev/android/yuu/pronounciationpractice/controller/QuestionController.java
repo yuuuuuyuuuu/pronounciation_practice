@@ -23,7 +23,7 @@ public class QuestionController {
         this.mListener = listener;
 
         this.mQuestionModel = new QuestionModel(this);
-        this.mListener.onQuestionInitialized(this.mQuestionModel.Current());
+        //this.mListener.onQuestionInitialized(this.mQuestionModel.Current());
     }
 
     /* Public Methods */
@@ -48,6 +48,10 @@ public class QuestionController {
     {
         return this.mQuestionModel.getSize();
     }
+
+    public int getCurrentIndex(){ return this.mQuestionModel.getCurrentIndex(); }
+
+    public String getCurrentQuestion(){return this.mQuestionModel.Current();}
 
     public void resetUserTrial()
     {

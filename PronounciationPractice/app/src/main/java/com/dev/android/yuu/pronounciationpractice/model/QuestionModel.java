@@ -69,6 +69,8 @@ public class QuestionModel {
         return this.mQuestions.size();
     }
 
+    public int getCurrentIndex() { return this.mCurrentQuestionIndex; }
+
     /* Private Methods */
     private void initialize()
     {

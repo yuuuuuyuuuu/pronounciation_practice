@@ -1,8 +1,10 @@
 package com.dev.android.yuu.pronounciationpractice;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,15 +77,17 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         this.mLinearLayoutLevelButtons = (LinearLayout)findViewById(this.LinearLayoutLevelButtonId);
         this.mLevelButtons = new ArrayList<Button>();
 
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200);
+        lp.setMargins(50, 20, 50, 20);
 
         for(int i = 0; i < this.LEVEL_BUTTON_NUM; i++)
         {
             Button button = new Button(this);
             button.setLayoutParams(lp);
-            button.setText("Level " + String.valueOf(i));
-            button.setTag(i);
+            button.setText("Level " + String.valueOf(i + 1));
+            button.setTag(i + 1);
             button.setOnClickListener(this);
+            button.setBackground(getResources().getDrawable(R.drawable.button_blue_basic));
 
             this.mLevelButtons.add(button);
             this.mLinearLayoutLevelButtons.addView(button);
