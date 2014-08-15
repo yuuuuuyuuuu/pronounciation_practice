@@ -1,9 +1,11 @@
 package com.dev.android.yuu.pronounciationpractice.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Chieko on 8/15/14.
  */
-public class UserScoreModel {
+public class UserScoreModel implements Serializable{
 
     private int level = -1;
     private float score = 0;

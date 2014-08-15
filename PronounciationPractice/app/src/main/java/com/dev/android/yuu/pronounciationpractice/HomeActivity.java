@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.dev.android.yuu.pronounciationpractice.R;
+import com.dev.android.yuu.pronounciationpractice.util.UserDataRecordUtil;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,9 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_home);
 
         this.createLevelButtons();
+
+        UserDataRecordUtil.Load(this);
+        UserDataRecordUtil.Save(this);
     }
 
 
