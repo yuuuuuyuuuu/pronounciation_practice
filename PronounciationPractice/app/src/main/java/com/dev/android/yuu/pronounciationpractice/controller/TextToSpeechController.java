@@ -24,6 +24,11 @@ public class TextToSpeechController {
         this.mTextToSpeechModel.Speak(text);
     }
 
+    public void destroyTextToSpeechEngine()
+    {
+        this.mTextToSpeechModel.destroy();
+    }
+
     /* Private Methods */
     private void initialize()
     {

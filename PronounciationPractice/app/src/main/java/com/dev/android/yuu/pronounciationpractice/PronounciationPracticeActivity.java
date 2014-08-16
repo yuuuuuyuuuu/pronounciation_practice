@@ -217,7 +217,32 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
         this.storeNextQuestion("You finished!!");
 
-        this.mScoreDialog.setMessage("Score: " + String.valueOf(this.mQuestionController.getScore()));
+        int score = Math.round(this.mQuestionController.getScore());
+
+        String message = "";
+        if(score < 60)
+        {
+            message = "もう少し！";
+        }
+        else if(score < 80)
+        {
+            message = "いい感じ！";
+        }
+        else if(score < 90)
+        {
+            message = "すごい！ほとんど完璧！";
+        }
+        else if(score <= 100)
+        {
+            message = "すげぇ！ネイティブですか！？";
+        }
+        else
+        {
+            DebugUtil.DebugLog(this.getClass().toString(), "onQuestionEnded", "No message target found");
+        }
+
+        this.mScoreDialog.setTitle(message);
+        this.mScoreDialog.setMessage("スコア: " + String.valueOf(score));
         this.mScoreDialog.show();
 
     }
@@ -348,7 +373,7 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private void processFinalize()
     {
         // Save score
-        float score = this.mQuestionController.getScore();
+        int score = Math.round(this.mQuestionController.getScore());
         boolean isDone = false;
         if(this.USER_ACHIEVEMENT_THRESHOLD <= score) isDone = true;
 
@@ -356,6 +381,7 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         UserDataRecordUtil.Save(this);
 
         this.mSpeechRecognitionController.destroyRecognizer();
+        this.mTextToSpeechController.destroyTextToSpeechEngine();
 
         try {
             Thread.sleep(1000);

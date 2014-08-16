@@ -51,14 +51,6 @@ public class UserDataRecordUtil{
         {
             e.printStackTrace();
         }
-
-        // test data
-        /*
-        UserDataRecordUtil.userScores = new ArrayList<UserScoreModel>();
-        userScores.add(new UserScoreModel());
-        userScores.add(new UserScoreModel());
-        userScores.add(new UserScoreModel());
-        */
     }
 
     public static void Save(Activity parentActivity)
@@ -88,7 +80,7 @@ public class UserDataRecordUtil{
         UserDataRecordUtil.userScores = new ArrayList<UserScoreModel>();
     }
 
-    public static void UpdateScore(int level, float score, boolean isDone)
+    public static void UpdateScore(int level, int score, boolean isDone)
     {
         if(null ==  UserDataRecordUtil.userScores)
         {

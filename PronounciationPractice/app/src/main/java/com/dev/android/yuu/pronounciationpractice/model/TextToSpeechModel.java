@@ -37,6 +37,14 @@ public class TextToSpeechModel implements TextToSpeech.OnInitListener {
         this.mTextToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 
+    public void destroy()
+    {
+        if(null != this.mTextToSpeech)
+        {
+            this.mTextToSpeech.stop();
+            this.mTextToSpeech.shutdown();
+        }
+    }
     @Override
     public void onInit(int status) {
 

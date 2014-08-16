@@ -43,6 +43,10 @@ public class HomeActivity extends Activity implements View.OnClickListener {
 
         setContentView(R.layout.activity_home);
 
+        // Debug: reset user data
+        UserDataRecordUtil.Reset();
+        UserDataRecordUtil.Save(this);
+
         this.createLevelButtons();
     }
 
@@ -114,8 +118,6 @@ public class HomeActivity extends Activity implements View.OnClickListener {
             button.setTag(i + 1);
             button.setOnClickListener(this);
             button.setBackground(getResources().getDrawable(R.drawable.button_blue_basic));
-
-
 
             String buttonLabel = "初級 " + String.valueOf(i + 1);
 

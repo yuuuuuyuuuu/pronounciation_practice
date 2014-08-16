@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class UserScoreModel implements Serializable{
 
     private int mLevel = -1;
-    private float mScore = 0;
+    private int mScore = 0;
     private boolean mIsDone = false;
 
     public UserScoreModel()
@@ -16,7 +16,7 @@ public class UserScoreModel implements Serializable{
 
     }
 
-    public void setData(int level, float score, boolean isDone)
+    public void setData(int level, int score, boolean isDone)
     {
         this.mLevel = level;
         this.mScore = score;
@@ -28,7 +28,7 @@ public class UserScoreModel implements Serializable{
         return this.mLevel;
     }
 
-    public float getScore()
+    public int getScore()
     {
         return this.mScore;
     }
