@@ -45,6 +45,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     private Button mButtonSkip = null;
     private int SkipButtonId = R.id.button_skip;
 
+    private Button mButtonListen = null;
+    private int ListenButtonId = R.id.button_listen;
+
     private TextView mTextViewCurrentQuestion = null;
     private int CurrentQuestionTextViewId = R.id.textview_current_question;
 
@@ -138,6 +141,12 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         else if(viewId == this.SkipButtonId)
         {
             DebugUtil.DebugLog(this.getClass().toString(), "SkipButton clicked");
+            this.mQuestionController.skipCurrent();
+        }
+        else if(viewId == this.ListenButtonId)
+        {
+            DebugUtil.DebugLog(this.getClass().toString(), "ListenButton clicked");
+
         }
 
     }
@@ -264,6 +273,9 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
         this.mButtonSkip = (Button)findViewById(this.SkipButtonId);
         this.mButtonSkip.setOnClickListener(this);
+
+        this.mButtonListen = (Button)findViewById(this.ListenButtonId);
+        this.mButtonListen.setOnClickListener(this);
 
         this.mTextViewCurrentQuestion = (TextView)findViewById(this.CurrentQuestionTextViewId);
         this.mTextViewResult = (TextView)findViewById(this.ResultTextViewId);

@@ -32,6 +32,8 @@ public class QuestionController {
     /* Public Methods */
     public boolean checkAnswer(String userAnswer)
     {
+        DebugUtil.DebugLog(this.getClass().toString(), "checkAnswer");
+
         boolean result = false;
 
         this.mUserTrialNum++;
@@ -41,19 +43,16 @@ public class QuestionController {
         if(userAnswer.toLowerCase().equals(currentTarget.toLowerCase()))
         {
             result = true;
-
-            if(this.mQuestionModel.hasNext())
-            {
-                this.mListener.onQuestionUpdated(this.mQuestionModel.Next());
-
-            }
-            else
-            {
-                this.mListener.onQuestionEnded();
-            }
+            this.goNextQuestion();
         }
 
         return result;
+    }
+
+    public void skipCurrent()
+    {
+        this.mUserTrialNum += 3; // penalty
+        this.goNextQuestion();
     }
 
     public int getQuestionSize()
@@ -83,6 +82,17 @@ public class QuestionController {
     }
 
     /* Private Methods */
+    private void goNextQuestion()
+    {
+        if(this.mQuestionModel.hasNext())
+        {
+            this.mListener.onQuestionUpdated(this.mQuestionModel.Next());
+        }
+        else
+        {
+            this.mListener.onQuestionEnded();
+        }
+    }
 
 
 
