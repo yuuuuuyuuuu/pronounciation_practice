@@ -15,6 +15,8 @@ public class TextToSpeechModel implements TextToSpeech.OnInitListener {
     private Context mContext = null;
     private TextToSpeech mTextToSpeech = null;
 
+    private boolean mTtsReady = false;
+
     public TextToSpeechModel(Context context)
     {
         this.mContext = context;
@@ -25,6 +27,7 @@ public class TextToSpeechModel implements TextToSpeech.OnInitListener {
     public void Speak(String text)
     {
         if(text.length() < 0) return;
+        if(!this.mTtsReady) return;
 
         if(this.mTextToSpeech.isSpeaking())
         {
@@ -40,9 +43,10 @@ public class TextToSpeechModel implements TextToSpeech.OnInitListener {
         if(TextToSpeech.SUCCESS == status)
         {
             Locale enLocale = Locale.ENGLISH;
-            if(this.mTextToSpeech.isLanguageAvailable(enLocale) > TextToSpeech.LANG_AVAILABLE)
+            if(this.mTextToSpeech.isLanguageAvailable(enLocale) >= TextToSpeech.LANG_AVAILABLE)
             {
                 this.mTextToSpeech.setLanguage(enLocale);
+                this.mTtsReady = true;
             }
             else
             {

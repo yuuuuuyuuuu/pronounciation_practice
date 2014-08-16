@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.dev.android.yuu.pronounciationpractice.R;
 import com.dev.android.yuu.pronounciationpractice.controller.QuestionController;
 import com.dev.android.yuu.pronounciationpractice.controller.SpeechRecognitionController;
+import com.dev.android.yuu.pronounciationpractice.controller.TextToSpeechController;
 import com.dev.android.yuu.pronounciationpractice.custoninterface.QuestionModelListener;
 import com.dev.android.yuu.pronounciationpractice.custoninterface.SpeechRecognitionInterface;
 import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
@@ -35,6 +36,7 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
     private SpeechRecognitionController mSpeechRecognitionController = null;
     private QuestionController mQuestionController = null;
+    private TextToSpeechController mTextToSpeechController = null;
 
     private int mQuestionLevel = 0;
 
@@ -101,6 +103,7 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
         this.mSpeechRecognitionController = new SpeechRecognitionController(this, this);
         this.mQuestionController = new QuestionController(this, this, this.mQuestionLevel);
+        this.mTextToSpeechController = new TextToSpeechController(this);
 
         this.initialize();
     }
@@ -146,7 +149,7 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         else if(viewId == this.ListenButtonId)
         {
             DebugUtil.DebugLog(this.getClass().toString(), "ListenButton clicked");
-
+            this.mTextToSpeechController.Speak(this.mQuestionController.getCurrentQuestion());
         }
 
     }
