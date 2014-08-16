@@ -11,5 +11,8 @@
     <string name="pronounciation_practice_user_control_listen">Listen</string>
     <string name="home_title">レベルの選択</string>
     <string name="button_label_skip">スキップ</string>
+    <string name="button_label_listen">聞く</string>
+    <string name="label_your_phrase">あなたの発話</string>
+    <string name="label_try_word_below">この単語を発音してみよう</string>
 
 </resources>

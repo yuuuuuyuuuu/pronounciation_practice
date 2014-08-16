@@ -73,10 +73,10 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
 
     // Animation
     private TranslateAnimation mQuestionSlideInAnimation = null;
-    private static int SLIDE_IN_ANIM_DURATION = 500;
+    private static int SLIDE_IN_ANIM_DURATION = 700;
 
     private TranslateAnimation mQuestionSlideOutAnimation = null;
-    private static int SLIDE_OUT_ANIM_DURATION = 500;
+    private static int SLIDE_OUT_ANIM_DURATION = 700;
 
     private RotateAnimation mMicRotationAnimation = null;
     private static int MIC_ROTATION_ANIM_DURATION = 1200;
@@ -222,6 +222,7 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         {
             DebugUtil.DebugLog(this.getClass().toString(), "SlideOutEnded");
             this.setNewQuestion();
+            this.clearUserResult();
         }
 
     }
@@ -322,6 +323,11 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
         this.mTextViewQuestionNumStatus.setText((currentQuestionIndex + 1) + " / " + questionSize);
 
         this.mTextViewCurrentQuestion.startAnimation(this.mQuestionSlideInAnimation);
+    }
+
+    private void clearUserResult()
+    {
+        this.mTextViewResult.setText("");
     }
 
     private void processFinalize()

@@ -43,7 +43,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="6"
@@ -53,10 +53,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/label_try_word_below"
+            android:id="@+id/textView2"
+            android:textColor="@color/text_color_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/textview_current_question"
             android:textColor="@color/text_color_blue"
-            android:textSize="24pt" />
+            android:textSize="26pt" />
 
     </LinearLayout>
 
@@ -65,28 +73,39 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="9"
-        android:background="@color/pronounciation_practice_question_display_background">
+        android:background="@color/pronounciation_practice_question_display_background"
+        android:gravity="center_vertical|center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/label_your_phrase"
+            android:id="@+id/textView"
+            android:textColor="@color/text_color_gray" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/textview_user_pronounciation_text" />
+            android:id="@+id/textview_user_pronounciation_text"
+            android:textSize="14pt" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
-            android:id="@+id/textview_result_text_score" />
+            android:id="@+id/textview_result_text_score"
+            android:visibility="invisible" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
-            android:id="@+id/textview_volume_level" />
+            android:id="@+id/textview_volume_level"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <LinearLayout
@@ -97,6 +116,14 @@
         android:background="@color/pronounciation_practice_user_control_background"
         android:gravity="center_vertical|center_horizontal"
         android:id="@+id/linearlayout_mic">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_label_listen"
+            android:id="@+id/button_listen"
+            android:background="@drawable/speak_button_round_small"
+            android:textColor="@color/text_color_blue" />
 
         <Button
             android:layout_width="120dp"
