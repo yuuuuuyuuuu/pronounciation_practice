@@ -15,5 +15,6 @@
     <string name="label_try_word_below">この単語を発音してみよう</string>
     <string name="label_title1">for Mobile</string>
     <string name="label_title_version">Version 1.0</string>
+    <string name="label_title_intermidiate">中級</string>
 
 </resources>

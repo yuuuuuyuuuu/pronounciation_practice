@@ -7,7 +7,6 @@ import android.widget.Button;
 import com.dev.android.yuu.pronounciationpractice.R;
 import com.dev.android.yuu.pronounciationpractice.controller.SpeechRecognitionController;
 import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
-import com.dev.android.yuu.pronounciationpractice.view.UserControllerView;
 
 /**
  * Created by Chieko on 8/10/14.

@@ -5,6 +5,8 @@ import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
 import com.dev.android.yuu.pronounciationpractice.util.QuestionDataUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  * Created by Chieko on 8/14/14.
@@ -105,16 +107,11 @@ public class QuestionModel {
     {
         boolean result = false;
 
-        /*
-        // test data
-        this.mQuestions = new ArrayList<String>();
-        this.mQuestions.add("Hello");
-        this.mQuestions.add("Contribution");
-        this.mQuestions.add("Mobile");
-        this.mQuestions.add("Refrigerator");
-        */
-
         this.mQuestions = QuestionDataUtil.GetQuestion(this.mLevel);
+
+        long seed = System.nanoTime();
+        Collections.shuffle(this.mQuestions, new Random(seed));
+
         result = true;
 
         return result;

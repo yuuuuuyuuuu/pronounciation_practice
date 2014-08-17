@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.dev.android.yuu.pronounciationpractice.R;
 import com.dev.android.yuu.pronounciationpractice.controller.QuestionController;
 import com.dev.android.yuu.pronounciationpractice.controller.SpeechRecognitionController;
 import com.dev.android.yuu.pronounciationpractice.controller.TextToSpeechController;
@@ -26,9 +25,6 @@ import com.dev.android.yuu.pronounciationpractice.custoninterface.SpeechRecognit
 import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
 import com.dev.android.yuu.pronounciationpractice.util.ScreenUtil;
 import com.dev.android.yuu.pronounciationpractice.util.UserDataRecordUtil;
-import com.dev.android.yuu.pronounciationpractice.view.UserControllerView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -272,10 +268,17 @@ public class PronounciationPracticeActivity extends Activity implements View.OnC
     @Override
     public void onClick(DialogInterface dialogInterface, int whichButton)
     {
+
         if(whichButton == DialogInterface.BUTTON_POSITIVE)
         {
             this.processFinalize();
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        DebugUtil.DebugLog(this.getClass().toString(), "onBackPressed");
     }
 
     /* Private Methods */

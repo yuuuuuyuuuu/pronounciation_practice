@@ -1,15 +1,12 @@
 package com.dev.android.yuu.pronounciationpractice.controller;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Debug;
 
 import com.dev.android.yuu.pronounciationpractice.custoninterface.SpeechRecognitionInterface;
 import com.dev.android.yuu.pronounciationpractice.handler.UserControllerViewHandler;
 import com.dev.android.yuu.pronounciationpractice.model.SpeechRecognitionListener;
 import com.dev.android.yuu.pronounciationpractice.model.SpeechRecognizerModel;
 import com.dev.android.yuu.pronounciationpractice.util.DebugUtil;
-import com.dev.android.yuu.pronounciationpractice.view.UserControllerView;
 
 import java.util.ArrayList;
 

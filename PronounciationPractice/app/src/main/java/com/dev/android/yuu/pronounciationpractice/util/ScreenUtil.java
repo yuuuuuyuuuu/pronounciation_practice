@@ -1,6 +1,5 @@
 package com.dev.android.yuu.pronounciationpractice.util;
 
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Point;
 import android.view.Display;

@@ -1,10 +1,7 @@
 package com.dev.android.yuu.pronounciationpractice;
 
-import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +11,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.dev.android.yuu.pronounciationpractice.R;
 import com.dev.android.yuu.pronounciationpractice.model.LevelComparator;
 import com.dev.android.yuu.pronounciationpractice.model.UserScoreModel;
 import com.dev.android.yuu.pronounciationpractice.util.UserDataRecordUtil;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_linearlayout_background_color">#AAAAFF</color>
-    <color name="question_display_linearlayout_background_color">#CCCCCC</color>
-    <color name="controller_linearlayout_background_color">#AAAAFF</color>
-    <color name="pronounciation_practice_background">#00BB00</color>
+
+
+    <!-- Beginner Level -->
+    <!--
     <color name="pronounciation_practice_question_display_background">#DDDDDD</color>
     <color name="pronounciation_practice_user_control_background">#1660FF</color>
     <color name="level_button_default">#9BBCFF</color>
@@ -17,4 +17,22 @@
     <color name="text_color_gray">#AAAAAA</color>
     <color name="text_color_blue">#0000FF</color>
     <color name="bg_white">#FFFFFF</color>
+    -->
+
+    <!-- Intermidiate Level -->
+    <color name="pronounciation_practice_question_display_background">#DDDDDD</color>
+    <color name="pronounciation_practice_user_control_background">#00CC0A</color>
+    <color name="level_button_default">#85FF8B</color>
+    <color name="level_button_pressed">#00CC0A</color>
+    <color name="level_button_default_light">#EEEEEE</color>
+    <color name="level_button_default_pale">#CCCCCC</color>
+    <color name="mic_on_background">#FF5555</color>
+    <color name="mic_off_background">#00CC0A</color>
+    <color name="custom_button_disabled">#777777</color>
+    <color name="text_color_white">#FFFFFF</color>
+    <color name="text_color_gray">#AAAAAA</color>
+    <color name="text_color_blue">#00CC0A</color>
+    <color name="bg_white">#FFFFFF</color>
+
+
 </resources>
