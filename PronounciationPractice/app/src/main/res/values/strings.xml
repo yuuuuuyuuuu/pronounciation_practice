@@ -16,5 +16,6 @@
     <string name="label_title1">for Mobile</string>
     <string name="label_title_version">Version 1.0</string>
     <string name="label_title_intermidiate">中級</string>
+    <string name="label_speak">話す</string>
 
 </resources>

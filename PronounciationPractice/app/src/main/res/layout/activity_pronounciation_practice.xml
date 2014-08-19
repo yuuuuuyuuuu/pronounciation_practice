@@ -117,30 +117,78 @@
         android:gravity="center_vertical|center_horizontal"
         android:id="@+id/linearlayout_mic">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_label_listen"
-            android:id="@+id/button_listen"
-            android:background="@drawable/speak_button_round_small"
-            android:textColor="@color/text_color_blue" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical|center_horizontal">
 
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:id="@+id/button_user_control_speak"
-            android:background="@drawable/speak_button_round"
-            android:textColor="@color/text_color_gray"
-            android:textSize="16pt" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_listen"
+                android:background="@drawable/speaker_icon_small"
+                android:textColor="@color/text_color_blue" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_label_skip"
-            android:id="@+id/button_skip"
-            android:background="@drawable/speak_button_round_small"
-            android:textColor="@color/text_color_blue"
-            android:textSize="8pt" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/button_label_listen"
+                android:id="@+id/textview_label_listen"
+                android:textColor="@color/text_color_white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical|center_horizontal">
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:id="@+id/button_user_control_speak"
+                android:background="@drawable/speak_button_round"
+                android:textColor="@color/text_color_gray"
+                android:textSize="16pt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/label_speak"
+                android:id="@+id/textview_label_mic"
+                android:textColor="@color/text_color_white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:gravity="center_vertical|center_horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_skip"
+                android:background="@drawable/icon_skip_small"
+                android:textColor="@color/text_color_blue"
+                android:textSize="8pt" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/button_label_skip"
+                android:id="@+id/textview_label_skip"
+                android:textColor="@color/text_color_white" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
